@@ -7,6 +7,102 @@ let seed = null;
 let pdfFile = null;
 let saveTimer = null;
 
+const I18N = {
+  en: {
+    new: "New", save: "Save", exportPdf: "Export PDF", exportDocx: "Export DOCX", addItem: "+ Add item",
+    project: "Project", client: "Client", preparedBy: "Prepared by", date: "Date", revision: "Revision",
+    currency: "Currency", notes: "Notes / assumptions", template: "Template",
+    scannerTpl: "Scanner enclosure", fabTpl: "Metal / wood / glass", blankTpl: "Blank BOM",
+    apply: "Apply", importJson: "Import JSON", exportJson: "Export JSON", exportCsv: "Export CSV",
+    uploadPdf: "Upload BOM PDF", material: "Material", labour: "Labour", totalCost: "Total cost", grandTotal: "Grand total",
+    bomTitle: "Bill of materials", duplicate: "Duplicate", removeEmpty: "Remove empty rows", addLine: "+ Add line",
+    localHint: "Values are saved locally in this browser. Blank cells are allowed.",
+    costSettings: "Cost settings", overhead: "Overhead %", contingency: "Contingency %", margin: "Margin %", vat: "VAT %",
+    shouldCost: "Should-cost", targetPrice: "Target price", bomHealth: "BOM health", pdfImport: "PDF import",
+    noPdf: "No PDF uploaded.", extractText: "Extract text",
+    pdfHint: "Text extraction uses PDF.js in the browser. Review imported lines before using them.",
+    sampleBom: "Sample BOM", sampleDesc: "Planning estimate for the scanner enclosure, including metal, wood and glass work.",
+    importedPdf: "Imported PDF text",
+    modalHint: "Edit the extracted text or import rows. Imported lines are appended to the current BOM.",
+    cancel: "Cancel", importParsed: "Import parsed lines",
+    projectPh: "Project name", clientPh: "Leave blank if unknown", preparedPh: "Name", revisionPh: "A / 01", optional: "Optional",
+    localDraft: "Local draft", saved: "Saved locally", importedJson: "Imported JSON", pdfAttached: "PDF attached",
+    importedLines: "{n} lines imported from PDF", lineCount: "{n} lines", dupTitle: "Duplicate", delTitle: "Delete",
+    subtotal: "Subtotal", cost: "Total cost", prevat: "Price before VAT", grand: "Grand total",
+    enterTarget: "Enter a target price.", underTarget: "Under target by {v}.", overTarget: "Over target by {v}.",
+    lines: "Lines", missingCost: "Missing cost", noSupplier: "No supplier", noLead: "No lead time", estimated: "Estimated prices",
+    healthHint: "Blank fields are allowed and are excluded from calculations.",
+    invalidJson: "Invalid JSON file.", docxUnavailable: "DOCX export is unavailable offline. Use Export PDF, or the bundled sample DOCX.",
+    pdfExtractFail: "Could not extract PDF text. The file can still be kept as an attachment; use JSON/CSV import or manual entry.",
+    noParse: "No parseable lines found. Edit the text and try again.",
+    confirmNew: "Start a new blank BOM? The current draft will be replaced.",
+    importedNote: "imported from PDF",
+    colNum: "#", colCategory: "Category", colItem: "Item", colDescription: "Description", colQty: "Qty", colUnit: "Unit",
+    colMaterial: "Material / unit", colLabour: "Labour / unit", colTotal: "Line total", colSupplier: "Supplier", colLead: "Lead time", colNotes: "Notes",
+    themeNight: "Night", themeDay: "Day"
+  },
+  ru: {
+    new: "Новый", save: "Сохранить", exportPdf: "Экспорт PDF", exportDocx: "Экспорт DOCX", addItem: "+ Добавить",
+    project: "Проект", client: "Клиент", preparedBy: "Подготовил", date: "Дата", revision: "Ревизия",
+    currency: "Валюта", notes: "Примечания / допущения", template: "Шаблон",
+    scannerTpl: "Корпус сканера", fabTpl: "Металл / дерево / стекло", blankTpl: "Пустой BOM",
+    apply: "Применить", importJson: "Импорт JSON", exportJson: "Экспорт JSON", exportCsv: "Экспорт CSV",
+    uploadPdf: "Загрузить BOM PDF", material: "Материалы", labour: "Работы", totalCost: "Себестоимость", grandTotal: "Итого",
+    bomTitle: "Спецификация", duplicate: "Дублировать", removeEmpty: "Удалить пустые строки", addLine: "+ Добавить строку",
+    localHint: "Значения сохраняются локально в браузере. Пустые ячейки допустимы.",
+    costSettings: "Настройки стоимости", overhead: "Накладные %", contingency: "Резерв %", margin: "Маржа %", vat: "НДС %",
+    shouldCost: "Целевая стоимость", targetPrice: "Целевая цена", bomHealth: "Проверка BOM", pdfImport: "Импорт PDF",
+    noPdf: "PDF не загружен.", extractText: "Извлечь текст",
+    pdfHint: "Извлечение текста выполняется в браузере через PDF.js. Проверьте импортированные строки.",
+    sampleBom: "Пример BOM", sampleDesc: "Плановый расчёт корпуса сканера, включая металл, дерево и стекло.",
+    importedPdf: "Текст из PDF",
+    modalHint: "Отредактируйте текст или импортируйте строки. Строки добавляются в текущий BOM.",
+    cancel: "Отмена", importParsed: "Импортировать строки",
+    projectPh: "Название проекта", clientPh: "Оставьте пустым, если неизвестно", preparedPh: "Имя", revisionPh: "A / 01", optional: "Необязательно",
+    localDraft: "Локальный черновик", saved: "Сохранено локально", importedJson: "JSON импортирован", pdfAttached: "PDF прикреплён",
+    importedLines: "Импортировано строк: {n}", lineCount: "Строк: {n}", dupTitle: "Дублировать", delTitle: "Удалить",
+    subtotal: "Подитог", cost: "Себестоимость", prevat: "Цена без НДС", grand: "Итого",
+    enterTarget: "Укажите целевую цену.", underTarget: "Ниже цели на {v}.", overTarget: "Выше цели на {v}.",
+    lines: "Строк", missingCost: "Без стоимости", noSupplier: "Без поставщика", noLead: "Без срока", estimated: "Оценочные цены",
+    healthHint: "Пустые поля допустимы и не учитываются в расчётах.",
+    invalidJson: "Некорректный JSON-файл.", docxUnavailable: "Экспорт DOCX недоступен без интернета. Используйте Export PDF или готовый DOCX.",
+    pdfExtractFail: "Не удалось извлечь текст PDF. Файл можно оставить как вложение; используйте JSON/CSV или ручной ввод.",
+    noParse: "Не найдено строк для импорта. Отредактируйте текст и повторите.",
+    confirmNew: "Начать новый пустой BOM? Текущий черновик будет заменён.",
+    importedNote: "импортировано из PDF",
+    colNum: "№", colCategory: "Категория", colItem: "Позиция", colDescription: "Описание", colQty: "Кол-во", colUnit: "Ед.",
+    colMaterial: "Материал / ед.", colLabour: "Работа / ед.", colTotal: "Сумма", colSupplier: "Поставщик", colLead: "Срок", colNotes: "Примечания",
+    themeNight: "Ночь", themeDay: "День"
+  }
+};
+let lang = localStorage.getItem("bom-lang") || "en";
+let theme = localStorage.getItem("bom-theme") || "light";
+function t(key, vars = {}) {
+  let v = (I18N[lang] && I18N[lang][key]) || I18N.en[key] || key;
+  Object.entries(vars).forEach(([k, val]) => { v = v.replaceAll("{" + k + "}", val); });
+  return v;
+}
+function applyTheme() {
+  document.body.classList.toggle("dark", theme === "dark");
+  const b = document.getElementById("theme-btn");
+  if (b) b.textContent = theme === "dark" ? t("themeDay") : t("themeNight");
+}
+function applyLang() {
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => { el.placeholder = t(el.dataset.i18nPlaceholder); });
+  document.querySelectorAll(".lang-choice").forEach(b => b.classList.toggle("active", b.dataset.lang === lang));
+  const heads = ["colNum","colCategory","colItem","colDescription","colQty","colUnit","colMaterial","colLabour","colTotal","colSupplier","colLead","colNotes"];
+  document.querySelectorAll("#bom-table thead th").forEach((th, i) => { if (heads[i]) th.textContent = t(heads[i]); });
+  applyTheme();
+  if (document.getElementById("status")) document.getElementById("status").textContent = t("localDraft");
+  if (state) {
+    renderTable(); renderSummary(); renderHealth();
+    if (pdfFile) document.getElementById("pdf-name").textContent = `${pdfFile.name} · ${Math.round(pdfFile.size / 1024)} KB`;
+    else document.getElementById("pdf-name").textContent = t("noPdf");
+  }
+}
+
 const blankItem = () => ({
   category: "", item: "", description: "", qty: 1, unit: "pcs",
   material: 0, labor: 0, supplier: "", lead: "", notes: "",
@@ -57,7 +153,7 @@ function persistSoon() {
 }
 function saveLocal() {
   localStorage.setItem(STORE, JSON.stringify(state));
-  setStatus("Saved locally · " + new Date().toLocaleTimeString());
+  setStatus(t("saved") + " · " + new Date().toLocaleTimeString());
 }
 
 function normalize(data) {
@@ -95,12 +191,12 @@ function renderTable() {
       </td>`).join("")}
       <td class="total" data-line-total="${i}">${fmt(line)}</td>
       <td><div class="row-actions">
-        <button class="icon-btn" data-dup="${i}" title="Duplicate">⧉</button>
-        <button class="icon-btn" data-del="${i}" title="Delete">×</button>
+        <button class="icon-btn" data-dup="${i}" title="${t("dupTitle")}">⧉</button>
+        <button class="icon-btn" data-del="${i}" title="${t("delTitle")}">×</button>
       </div></td>
     </tr>`;
   }).join("");
-  $("#line-count").textContent = `${state.items.length} lines`;
+  $("#line-count").textContent = `${t("lineCount", { n: state.items.length })}`;
 }
 
 function renderSummary() {
@@ -110,28 +206,28 @@ function renderSummary() {
   $("#stat-cost").textContent = fmt(c.cost);
   $("#stat-grand").textContent = fmt(c.grand);
   const rows = [
-    ["Material", c.materials], ["Labour", c.labor], ["Subtotal", c.subtotal],
-    [`Overhead ${state.settings.overhead}%`, c.overhead],
-    [`Contingency ${state.settings.contingency}%`, c.contingency],
-    ["Total cost", c.cost],
-    [`Margin ${state.settings.margin}%`, c.margin],
-    ["Price before VAT", c.preVat],
+    [t("material"), c.materials], [t("labour"), c.labor], [t("subtotal"), c.subtotal],
+    [`${t("overhead")} ${state.settings.overhead}%`, c.overhead],
+    [`${t("contingency")} ${state.settings.contingency}%`, c.contingency],
+    [t("cost"), c.cost],
+    [`${t("margin")} ${state.settings.margin}%`, c.margin],
+    [t("prevat"), c.preVat],
     [`VAT ${state.settings.vat}%`, c.vat],
   ];
   $("#summary").innerHTML = rows.map(([l, v]) => `<div class="summary-row"><span>${esc(l)}</span><b>${fmt(v)}</b></div>`).join("")
-    + `<div class="summary-row total"><span>Grand total</span><b>${fmt(c.grand)}</b></div>`;
+    + `<div class="summary-row total"><span>${t("grand")}</span><b>${fmt(c.grand)}</b></div>`;
 
   const target = num($("#target-price").value);
   const diff = c.grand - target;
   const v = $("#variance");
   if (!target) {
-    v.textContent = "Enter a target price.";
+    v.textContent = t("enterTarget");
     v.className = "variance";
   } else if (diff <= 0) {
-    v.textContent = `Under target by ${fmt(Math.abs(diff))}.`;
+    v.textContent = t("underTarget", { v: fmt(Math.abs(diff)) });
     v.className = "variance good";
   } else {
-    v.textContent = `Over target by ${fmt(diff)}.`;
+    v.textContent = t("overTarget", { v: fmt(diff) });
     v.className = "variance bad";
   }
 }
@@ -142,14 +238,14 @@ function renderHealth() {
   const noLead = state.items.filter(i => !String(i.lead || "").trim()).length;
   const estimated = state.items.filter(i => /estimate/i.test(i.notes || "")).length;
   const items = [
-    ["Lines", state.items.length, ""],
-    ["Missing cost", missing, missing ? "warning" : "ok"],
-    ["No supplier", noSupplier, noSupplier ? "warning" : "ok"],
-    ["No lead time", noLead, ""],
-    ["Estimated prices", estimated, ""],
+    [t("lines"), state.items.length, ""],
+    [t("missingCost"), missing, missing ? "warning" : "ok"],
+    [t("noSupplier"), noSupplier, noSupplier ? "warning" : "ok"],
+    [t("noLead"), noLead, ""],
+    [t("estimated"), estimated, ""],
   ];
   $("#health").innerHTML = items.map(([l, n, cls]) => `<div class="health-item"><span>${l}</span><b class="${cls}">${n}</b></div>`).join("")
-    + `<span class="hint">Blank fields are allowed and are excluded from calculations.</span>`;
+    + `<span class="hint">${t("healthHint")}</span>`;
 }
 
 function updateLineTotals() {
@@ -197,15 +293,15 @@ function exportCsv() {
 
 function printBom() {
   const c = calc();
-  const head = ["#", "Category", "Item", "Description", "Qty", "Unit", "Material", "Labour", "Line total", "Supplier", "Lead", "Notes"];
+  const head = [t("colNum"), t("colCategory"), t("colItem"), t("colDescription"), t("colQty"), t("colUnit"), t("colMaterial"), t("colLabour"), t("colTotal"), t("colSupplier"), t("colLead"), t("colNotes")];
   const rows = state.items.map((i, n) => [
     n + 1, i.category, i.item, i.description, i.qty, i.unit, i.material, i.labor,
     num(i.qty) * (num(i.material) + num(i.labor)), i.supplier, i.lead, i.notes
   ]);
   const sum = [
-    ["Material", c.materials], ["Labour", c.labor], ["Subtotal", c.subtotal],
-    ["Overhead", c.overhead], ["Contingency", c.contingency], ["Total cost", c.cost],
-    ["Margin", c.margin], ["Price before VAT", c.preVat], ["VAT", c.vat], ["Grand total", c.grand],
+    [t("material"), c.materials], [t("labour"), c.labor], [t("subtotal"), c.subtotal],
+    [t("overhead"), c.overhead], [t("contingency"), c.contingency], [t("cost"), c.cost],
+    [t("margin"), c.margin], [t("prevat"), c.preVat], [t("vat"), c.vat], [t("grand"), c.grand],
   ];
   $("#print-area").innerHTML = `
     <h1>${esc(state.project || "Bill of Materials")}</h1>
@@ -230,7 +326,7 @@ async function exportDocx() {
       });
     }
     const c = calc();
-    const head = ["#", "Category", "Item", "Description", "Qty", "Unit", "Material", "Labour", "Line total", "Supplier", "Lead", "Notes"];
+    const head = [t("colNum"), t("colCategory"), t("colItem"), t("colDescription"), t("colQty"), t("colUnit"), t("colMaterial"), t("colLabour"), t("colTotal"), t("colSupplier"), t("colLead"), t("colNotes")];
     const rows = state.items.map((i, n) => [
       n + 1, i.category, i.item, i.description, i.qty, i.unit, i.material, i.labor,
       num(i.qty) * (num(i.material) + num(i.labor)), i.supplier, i.lead, i.notes
@@ -240,7 +336,7 @@ async function exportDocx() {
       <p>Client: ${esc(state.client || "")} · Prepared by: ${esc(state.prepared_by || "")} · Date: ${esc(state.date || "")} · Revision: ${esc(state.revision || "")} · Currency: ${esc(state.currency)}</p>
       <table border="1" cellspacing="0" cellpadding="4"><thead><tr>${head.map(h => `<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>
       ${rows.map(r => `<tr>${r.map(v => `<td>${esc(v)}</td>`).join("")}</tr>`).join("")}</tbody></table>
-      <p><b>Grand total:</b> ${fmt(c.grand)}</p>
+      <p><b>${t("grand")}:</b> ${fmt(c.grand)}</p>
       <p>${esc(state.notes || "")}</p></body></html>`;
     const blob = window.htmlDocx.asBlob(html, { orientation: "landscape" });
     const a = document.createElement("a");
@@ -249,7 +345,7 @@ async function exportDocx() {
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   } catch (err) {
-    alert("DOCX export is unavailable offline. Use Export PDF, or the bundled sample DOCX.");
+    alert(t("docxUnavailable"));
   }
 }
 
@@ -263,7 +359,7 @@ function parsePdfLines(text) {
       const nums = parts.map(p => p.replace(/[^\d.,-]/g, "")).filter(Boolean);
       const qty = nums.length ? Math.max(1, Math.round(num(nums[0]))) : 1;
       const price = nums.length > 1 ? num(nums[nums.length - 1]) : 0;
-      out.push({ ...blankItem(), item: parts[0], description: parts.slice(1).join(" "), qty, material: price, notes: "imported from PDF" });
+      out.push({ ...blankItem(), item: parts[0], description: parts.slice(1).join(" "), qty, material: price, notes: t("importedNote") });
     }
   });
   return out;
@@ -284,7 +380,7 @@ async function extractPdf() {
     $("#pdf-text").value = text;
     $("#pdf-modal").hidden = false;
   } catch (e) {
-    alert("Could not extract PDF text. The file can still be kept as an attachment; use JSON/CSV import or manual entry.");
+    alert(t("pdfExtractFail"));
   }
 }
 
@@ -309,7 +405,7 @@ async function boot() {
   const saved = localStorage.getItem(STORE);
   state = saved ? normalize(JSON.parse(saved)) : normalize(seed);
   renderAll();
-  setStatus("Local draft");
+  setStatus(t("localDraft"));
 
   $$("[data-meta]").forEach(el => el.addEventListener("input", () => {
     state[el.dataset.meta] = el.value;
@@ -352,9 +448,9 @@ async function boot() {
   $("#add-row-bottom").onclick = addItem;
   $("#apply-template").onclick = () => applyTemplate($("#template-select").value);
   $("#new-btn").onclick = () => {
-    if (confirm("Start a new blank BOM? The current draft will be replaced.")) applyTemplate("blank");
+    if (confirm(t("confirmNew"))) applyTemplate("blank");
   };
-  $("#save-btn").onclick = () => { saveLocal(); setStatus("Saved locally · " + new Date().toLocaleTimeString()); };
+  $("#save-btn").onclick = () => { saveLocal(); setStatus(t("saved") + " · " + new Date().toLocaleTimeString()); };
   $("#print-btn").onclick = printBom;
   $("#docx-btn").onclick = exportDocx;
   $("#json-export").onclick = exportJson;
@@ -366,31 +462,34 @@ async function boot() {
     renderAll(); persistSoon();
   };
   $("#target-price").addEventListener("input", renderSummary);
+  document.querySelectorAll(".lang-choice").forEach(b => b.addEventListener("click", () => { lang = b.dataset.lang; localStorage.setItem("bom-lang", lang); applyLang(); }));
+  $("#theme-btn").addEventListener("click", () => { theme = theme === "dark" ? "light" : "dark"; localStorage.setItem("bom-theme", theme); applyTheme(); });
+  applyTheme();
 
   $("#json-input").addEventListener("change", async e => {
     const f = e.target.files[0];
     if (!f) return;
     try {
       state = normalize(JSON.parse(await f.text()));
-      renderAll(); persistSoon(); setStatus("Imported JSON");
-    } catch (err) { alert("Invalid JSON file."); }
+      renderAll(); persistSoon(); setStatus(t("importedJson"));
+    } catch (err) { alert(t("invalidJson")); }
   });
 
   $("#pdf-input").addEventListener("change", e => {
     pdfFile = e.target.files[0] || null;
     $("#pdf-name").textContent = pdfFile ? `${pdfFile.name} · ${Math.round(pdfFile.size / 1024)} KB` : "No PDF uploaded.";
     $("#pdf-extract").disabled = !pdfFile;
-    if (pdfFile) setStatus("PDF attached");
+    if (pdfFile) setStatus(t("pdfAttached"));
   });
   $("#pdf-extract").onclick = extractPdf;
   $("#close-pdf").onclick = () => { $("#pdf-modal").hidden = true; };
   $("#cancel-pdf").onclick = () => { $("#pdf-modal").hidden = true; };
   $("#import-pdf-lines").onclick = () => {
     const rows = parsePdfLines($("#pdf-text").value);
-    if (!rows.length) { alert("No parseable lines found. Edit the text and try again."); return; }
+    if (!rows.length) { alert(t("noParse")); return; }
     state.items.push(...rows);
     $("#pdf-modal").hidden = true;
-    renderAll(); persistSoon(); setStatus(`${rows.length} lines imported from PDF`);
+    renderAll(); persistSoon(); setStatus(t("importedLines", { n: rows.length }));
   };
 }
 

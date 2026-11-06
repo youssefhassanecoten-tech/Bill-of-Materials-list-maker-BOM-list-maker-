@@ -114,3 +114,41 @@ td.idx{color:#94a3b8;font-size:10px;text-align:center}
   .print-area .sum{margin-top:3mm;font-size:8pt;display:flex;flex-direction:column;gap:1mm;align-items:flex-end}
   .print-area .sum div{display:flex;gap:8mm;justify-content:space-between;width:70mm}
 }
+
+/* language and theme controls */
+.lang-pill{display:inline-flex;background:#e9edf3;border-radius:8px;padding:3px;gap:2px}
+.lang-choice{border:0;background:transparent;border-radius:6px;min-height:30px;padding:0 9px;font-size:11px;font-weight:800;color:#475569;cursor:pointer}
+.lang-choice.active{background:var(--accent);color:#fff}
+#theme-btn{min-width:70px}
+
+/* night mode */
+body.dark{background:#0b1220;color:#e5e7eb}
+body.dark .topbar{background:#111827;border-color:#263244}
+body.dark .brand p,body.dark .hint,body.dark .table-head p,body.dark .status{color:#94a3b8}
+body.dark .card,body.dark .stat{background:#111827;border-color:#263244}
+body.dark .stat span,body.dark label,body.dark h2,body.dark th{color:#94a3b8}
+body.dark .stat strong{color:#7db4ff}
+body.dark .stat.accent{background:#1f2937;border-color:#4b3a12}
+body.dark .stat.accent strong{color:#f5c95d}
+body.dark input,body.dark select,body.dark textarea{background:#0f172a;border-color:#334155;color:#e5e7eb}
+body.dark input::placeholder,body.dark textarea::placeholder{color:#64748b}
+body.dark .btn,body.dark .btn.ghost{background:#111827;border-color:#334155;color:#e5e7eb}
+body.dark .btn:hover{background:#1e293b}
+body.dark .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+body.dark th{background:#1e293b;border-color:#334155}
+body.dark td{border-color:#1f2937}
+body.dark tbody tr:hover{background:#111c2f}
+body.dark td input{color:#e5e7eb}
+body.dark td input:hover{background:#1e293b}
+body.dark .table-head,body.dark .table-foot{border-color:#263244}
+body.dark .doc-links a{background:#0f172a;border-color:#334155;color:#93c5fd}
+body.dark .modal-card{background:#111827;color:#e5e7eb}
+body.dark .modal-card h2{color:#e5e7eb}
+body.dark .summary-row{color:#94a3b8}
+body.dark .summary-row b{color:#e5e7eb}
+body.dark .summary-row.total{color:#7db4ff}
+body.dark .health-item{border-color:#263244}
+body.dark .pdf-box #pdf-name{border-color:#334155;color:#cbd5e1}
+body.dark .lang-pill{background:#1e293b}
+body.dark .lang-choice{color:#cbd5e1}
+body.dark .lang-choice.active{background:var(--accent);color:#fff}

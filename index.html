@@ -16,67 +16,69 @@
     </div>
   </div>
   <div class="top-actions">
-    <button class="btn ghost" id="new-btn">New</button>
-    <button class="btn ghost" id="save-btn">Save</button>
-    <button class="btn ghost" id="print-btn">Export PDF</button>
-    <button class="btn ghost" id="docx-btn">Export DOCX</button>
-    <button class="btn primary" id="add-btn">+ Add item</button>
+    <div class="lang-pill"><button type="button" class="lang-choice active" data-lang="en">EN</button><button type="button" class="lang-choice" data-lang="ru">RU</button></div>
+    <button type="button" class="btn ghost" id="theme-btn">Night</button>
+    <button class="btn ghost" id="new-btn" data-i18n="new">New</button>
+    <button class="btn ghost" id="save-btn" data-i18n="save">Save</button>
+    <button class="btn ghost" id="print-btn" data-i18n="exportPdf">Export PDF</button>
+    <button class="btn ghost" id="docx-btn" data-i18n="exportDocx">Export DOCX</button>
+    <button class="btn primary" id="add-btn" data-i18n="addItem">+ Add item</button>
   </div>
 </header>
 
 <main class="shell">
   <section class="project card">
     <div class="project-grid">
-      <label>Project<input data-meta="project" placeholder="Project name" /></label>
-      <label>Client<input data-meta="client" placeholder="Leave blank if unknown" /></label>
-      <label>Prepared by<input data-meta="prepared_by" placeholder="Name" /></label>
-      <label>Date<input data-meta="date" type="date" /></label>
-      <label>Revision<input data-meta="revision" placeholder="A / 01" /></label>
-      <label>Currency
+      <label><span data-i18n="project">Project</span><input data-meta="project" data-i18n-placeholder="projectPh" placeholder="Project name" /></label>
+      <label><span data-i18n="client">Client</span><input data-meta="client" data-i18n-placeholder="clientPh" placeholder="Leave blank if unknown" /></label>
+      <label><span data-i18n="preparedBy">Prepared by</span><input data-meta="prepared_by" data-i18n-placeholder="preparedPh" placeholder="Name" /></label>
+      <label><span data-i18n="date">Date</span><input data-meta="date" type="date" /></label>
+      <label><span data-i18n="revision">Revision</span><input data-meta="revision" data-i18n-placeholder="revisionPh" placeholder="A / 01" /></label>
+      <label><span data-i18n="currency">Currency</span>
         <select data-meta="currency">
           <option>RUB</option><option>USD</option><option>EUR</option><option>CNY</option><option>KZT</option>
         </select>
       </label>
     </div>
-    <label class="notes">Notes / assumptions<textarea data-meta="notes" rows="2"></textarea></label>
+    <label class="notes"><span data-i18n="notes">Notes / assumptions</span><textarea data-meta="notes" rows="2"></textarea></label>
   </section>
 
   <section class="toolbar-row">
     <div class="template-wrap">
-      <span>Template</span>
+      <span data-i18n="template">Template</span>
       <select id="template-select">
-        <option value="scanner">Scanner enclosure</option>
-        <option value="fabrication">Metal / wood / glass</option>
-        <option value="blank">Blank BOM</option>
+        <option value="scanner" data-i18n="scannerTpl">Scanner enclosure</option>
+        <option value="fabrication" data-i18n="fabTpl">Metal / wood / glass</option>
+        <option value="blank" data-i18n="blankTpl">Blank BOM</option>
       </select>
-      <button class="btn small" id="apply-template">Apply</button>
+      <button class="btn small" id="apply-template" data-i18n="apply">Apply</button>
     </div>
     <div class="file-actions">
-      <label class="btn small">Import JSON<input type="file" id="json-input" accept=".json,application/json" hidden /></label>
-      <button class="btn small" id="json-export">Export JSON</button>
-      <button class="btn small" id="csv-export">Export CSV</button>
-      <label class="btn small">Upload BOM PDF<input type="file" id="pdf-input" accept=".pdf,application/pdf" hidden /></label>
+      <label class="btn small"><span data-i18n="importJson">Import JSON</span><input type="file" id="json-input" accept=".json,application/json" hidden /></label>
+      <button class="btn small" id="json-export" data-i18n="exportJson">Export JSON</button>
+      <button class="btn small" id="csv-export" data-i18n="exportCsv">Export CSV</button>
+      <label class="btn small"><span data-i18n="uploadPdf">Upload BOM PDF</span><input type="file" id="pdf-input" accept=".pdf,application/pdf" hidden /></label>
     </div>
     <div class="status" id="status">Local draft</div>
   </section>
 
   <section class="stats">
-    <div class="stat"><span>Material</span><strong id="stat-material">0</strong></div>
-    <div class="stat"><span>Labour</span><strong id="stat-labor">0</strong></div>
-    <div class="stat"><span>Total cost</span><strong id="stat-cost">0</strong></div>
-    <div class="stat accent"><span>Grand total</span><strong id="stat-grand">0</strong></div>
+    <div class="stat"><span data-i18n="material">Material</span><strong id="stat-material">0</strong></div>
+    <div class="stat"><span data-i18n="labour">Labour</span><strong id="stat-labor">0</strong></div>
+    <div class="stat"><span data-i18n="totalCost">Total cost</span><strong id="stat-cost">0</strong></div>
+    <div class="stat accent"><span data-i18n="grandTotal">Grand total</span><strong id="stat-grand">0</strong></div>
   </section>
 
   <div class="workspace">
     <section class="card table-card">
       <div class="table-head">
         <div>
-          <h2>Bill of materials</h2>
+          <h2 data-i18n="bomTitle">Bill of materials</h2>
           <p id="line-count">0 lines</p>
         </div>
         <div class="table-actions">
-          <button class="btn small ghost" id="duplicate-selected">Duplicate</button>
-          <button class="btn small ghost" id="clear-empty">Remove empty rows</button>
+          <button class="btn small ghost" id="duplicate-selected" data-i18n="duplicate">Duplicate</button>
+          <button class="btn small ghost" id="clear-empty" data-i18n="removeEmpty">Remove empty rows</button>
         </div>
       </div>
       <div class="table-scroll">
@@ -92,46 +94,46 @@
         </table>
       </div>
       <div class="table-foot">
-        <button class="btn small" id="add-row-bottom">+ Add line</button>
-        <span class="hint">Values are saved locally in this browser. Blank cells are allowed.</span>
+        <button class="btn small" id="add-row-bottom" data-i18n="addLine">+ Add line</button>
+        <span class="hint" data-i18n="localHint">Values are saved locally in this browser. Blank cells are allowed.</span>
       </div>
     </section>
 
     <aside class="sidebar">
       <section class="card">
-        <h2>Cost settings</h2>
+        <h2 data-i18n="costSettings">Cost settings</h2>
         <div class="setting-grid">
-          <label>Overhead %<input type="number" data-setting="overhead" min="0" step="0.1" /></label>
-          <label>Contingency %<input type="number" data-setting="contingency" min="0" step="0.1" /></label>
-          <label>Margin %<input type="number" data-setting="margin" min="0" step="0.1" /></label>
-          <label>VAT %<input type="number" data-setting="vat" min="0" step="0.1" /></label>
+          <label><span data-i18n="overhead">Overhead %</span><input type="number" data-setting="overhead" min="0" step="0.1" /></label>
+          <label><span data-i18n="contingency">Contingency %</span><input type="number" data-setting="contingency" min="0" step="0.1" /></label>
+          <label><span data-i18n="margin">Margin %</span><input type="number" data-setting="margin" min="0" step="0.1" /></label>
+          <label><span data-i18n="vat">VAT %</span><input type="number" data-setting="vat" min="0" step="0.1" /></label>
         </div>
         <div class="summary" id="summary"></div>
       </section>
 
       <section class="card">
-        <h2>Should-cost</h2>
-        <label>Target price<input type="number" id="target-price" min="0" step="0.01" placeholder="Optional" /></label>
+        <h2 data-i18n="shouldCost">Should-cost</h2>
+        <label><span data-i18n="targetPrice">Target price</span><input type="number" id="target-price" min="0" step="0.01" data-i18n-placeholder="optional" placeholder="Optional" /></label>
         <div class="variance" id="variance">Enter a target price.</div>
       </section>
 
       <section class="card">
-        <h2>BOM health</h2>
+        <h2 data-i18n="bomHealth">BOM health</h2>
         <div id="health" class="health"></div>
       </section>
 
       <section class="card">
-        <h2>PDF import</h2>
+        <h2 data-i18n="pdfImport">PDF import</h2>
         <div class="pdf-box">
           <div id="pdf-name">No PDF uploaded.</div>
-          <button class="btn small" id="pdf-extract" disabled>Extract text</button>
-          <span class="hint">Text extraction uses PDF.js in the browser. Review imported lines before using them.</span>
+          <button class="btn small" id="pdf-extract" disabled data-i18n="extractText">Extract text</button>
+          <span class="hint" data-i18n="pdfHint">Text extraction uses PDF.js in the browser. Review imported lines before using them.</span>
         </div>
       </section>
 
       <section class="card docs-card">
-        <h2>Sample BOM</h2>
-        <p class="hint">Planning estimate for the scanner enclosure, including metal, wood and glass work.</p>
+        <h2 data-i18n="sampleBom">Sample BOM</h2>
+        <p class="hint" data-i18n="sampleDesc">Planning estimate for the scanner enclosure, including metal, wood and glass work.</p>
         <div class="doc-links">
           <a href="bom/scanner-bom.pdf" target="_blank" rel="noreferrer">PDF</a>
           <a href="bom/scanner-bom.docx" target="_blank" rel="noreferrer">DOCX</a>
@@ -147,14 +149,14 @@
 <div class="modal" id="pdf-modal" hidden>
   <div class="modal-card">
     <header>
-      <h2>Imported PDF text</h2>
+      <h2 data-i18n="importedPdf">Imported PDF text</h2>
       <button class="icon-btn" id="close-pdf" aria-label="Close">×</button>
     </header>
-    <p class="hint">Edit the extracted text or import rows. Imported lines are appended to the current BOM.</p>
+    <p class="hint" data-i18n="modalHint">Edit the extracted text or import rows. Imported lines are appended to the current BOM.</p>
     <textarea id="pdf-text" rows="14" placeholder="PDF text appears here..."></textarea>
     <footer>
-      <button class="btn ghost" id="cancel-pdf">Cancel</button>
-      <button class="btn primary" id="import-pdf-lines">Import parsed lines</button>
+      <button class="btn ghost" id="cancel-pdf" data-i18n="cancel">Cancel</button>
+      <button class="btn primary" id="import-pdf-lines" data-i18n="importParsed">Import parsed lines</button>
     </footer>
   </div>
 </div>
