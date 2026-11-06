@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BOM Studio — Bill of Materials maker</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="mark">BOM</div>
+    <div>
+      <h1>BOM Studio</h1>
+      <p>Build, import, edit and export bills of materials.</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <button class="btn ghost" id="new-btn">New</button>
+    <button class="btn ghost" id="save-btn">Save</button>
+    <button class="btn ghost" id="print-btn">Export PDF</button>
+    <button class="btn ghost" id="docx-btn">Export DOCX</button>
+    <button class="btn primary" id="add-btn">+ Add item</button>
+  </div>
+</header>
+
+<main class="shell">
+  <section class="project card">
+    <div class="project-grid">
+      <label>Project<input data-meta="project" placeholder="Project name" /></label>
+      <label>Client<input data-meta="client" placeholder="Leave blank if unknown" /></label>
+      <label>Prepared by<input data-meta="prepared_by" placeholder="Name" /></label>
+      <label>Date<input data-meta="date" type="date" /></label>
+      <label>Revision<input data-meta="revision" placeholder="A / 01" /></label>
+      <label>Currency
+        <select data-meta="currency">
+          <option>RUB</option><option>USD</option><option>EUR</option><option>CNY</option><option>KZT</option>
+        </select>
+      </label>
+    </div>
+    <label class="notes">Notes / assumptions<textarea data-meta="notes" rows="2"></textarea></label>
+  </section>
+
+  <section class="toolbar-row">
+    <div class="template-wrap">
+      <span>Template</span>
+      <select id="template-select">
+        <option value="scanner">Scanner enclosure</option>
+        <option value="fabrication">Metal / wood / glass</option>
+        <option value="blank">Blank BOM</option>
+      </select>
+      <button class="btn small" id="apply-template">Apply</button>
+    </div>
+    <div class="file-actions">
+      <label class="btn small">Import JSON<input type="file" id="json-input" accept=".json,application/json" hidden /></label>
+      <button class="btn small" id="json-export">Export JSON</button>
+      <button class="btn small" id="csv-export">Export CSV</button>
+      <label class="btn small">Upload BOM PDF<input type="file" id="pdf-input" accept=".pdf,application/pdf" hidden /></label>
+    </div>
+    <div class="status" id="status">Local draft</div>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><span>Material</span><strong id="stat-material">0</strong></div>
+    <div class="stat"><span>Labour</span><strong id="stat-labor">0</strong></div>
+    <div class="stat"><span>Total cost</span><strong id="stat-cost">0</strong></div>
+    <div class="stat accent"><span>Grand total</span><strong id="stat-grand">0</strong></div>
+  </section>
+
+  <div class="workspace">
+    <section class="card table-card">
+      <div class="table-head">
+        <div>
+          <h2>Bill of materials</h2>
+          <p id="line-count">0 lines</p>
+        </div>
+        <div class="table-actions">
+          <button class="btn small ghost" id="duplicate-selected">Duplicate</button>
+          <button class="btn small ghost" id="clear-empty">Remove empty rows</button>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table id="bom-table">
+          <thead>
+            <tr>
+              <th>#</th><th>Category</th><th>Item</th><th>Description</th>
+              <th>Qty</th><th>Unit</th><th>Material / unit</th><th>Labour / unit</th>
+              <th>Line total</th><th>Supplier</th><th>Lead time</th><th>Notes</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="bom-body"></tbody>
+        </table>
+      </div>
+      <div class="table-foot">
+        <button class="btn small" id="add-row-bottom">+ Add line</button>
+        <span class="hint">Values are saved locally in this browser. Blank cells are allowed.</span>
+      </div>
+    </section>
+
+    <aside class="sidebar">
+      <section class="card">
+        <h2>Cost settings</h2>
+        <div class="setting-grid">
+          <label>Overhead %<input type="number" data-setting="overhead" min="0" step="0.1" /></label>
+          <label>Contingency %<input type="number" data-setting="contingency" min="0" step="0.1" /></label>
+          <label>Margin %<input type="number" data-setting="margin" min="0" step="0.1" /></label>
+          <label>VAT %<input type="number" data-setting="vat" min="0" step="0.1" /></label>
+        </div>
+        <div class="summary" id="summary"></div>
+      </section>
+
+      <section class="card">
+        <h2>Should-cost</h2>
+        <label>Target price<input type="number" id="target-price" min="0" step="0.01" placeholder="Optional" /></label>
+        <div class="variance" id="variance">Enter a target price.</div>
+      </section>
+
+      <section class="card">
+        <h2>BOM health</h2>
+        <div id="health" class="health"></div>
+      </section>
+
+      <section class="card">
+        <h2>PDF import</h2>
+        <div class="pdf-box">
+          <div id="pdf-name">No PDF uploaded.</div>
+          <button class="btn small" id="pdf-extract" disabled>Extract text</button>
+          <span class="hint">Text extraction uses PDF.js in the browser. Review imported lines before using them.</span>
+        </div>
+      </section>
+
+      <section class="card docs-card">
+        <h2>Sample BOM</h2>
+        <p class="hint">Planning estimate for the scanner enclosure, including metal, wood and glass work.</p>
+        <div class="doc-links">
+          <a href="bom/scanner-bom.pdf" target="_blank" rel="noreferrer">PDF</a>
+          <a href="bom/scanner-bom.docx" target="_blank" rel="noreferrer">DOCX</a>
+          <a href="bom/scanner-bom.csv" target="_blank" rel="noreferrer">CSV</a>
+        </div>
+      </section>
+    </aside>
+  </div>
+</main>
+
+<div class="print-area" id="print-area"></div>
+
+<div class="modal" id="pdf-modal" hidden>
+  <div class="modal-card">
+    <header>
+      <h2>Imported PDF text</h2>
+      <button class="icon-btn" id="close-pdf" aria-label="Close">×</button>
+    </header>
+    <p class="hint">Edit the extracted text or import rows. Imported lines are appended to the current BOM.</p>
+    <textarea id="pdf-text" rows="14" placeholder="PDF text appears here..."></textarea>
+    <footer>
+      <button class="btn ghost" id="cancel-pdf">Cancel</button>
+      <button class="btn primary" id="import-pdf-lines">Import parsed lines</button>
+    </footer>
+  </div>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "project": "Scanner enclosure — planning BOM",
+  "client": "",
+  "prepared_by": "",
+  "date": "",
+  "revision": "",
+  "currency": "RUB",
+  "notes": "Planning estimates only. Replace estimates with supplier quotes. Blank fields require input. Estimated accuracy ±30%.",
+  "settings": {"overhead": 10, "contingency": 5, "margin": 25, "vat": 20},
+  "items": [
+    {"category":"Electronics","item":"Raspberry Pi 4 Model B 4GB","description":"Controller board","qty":1,"unit":"pcs","material":7500,"labor":0,"supplier":"","lead":"","notes":"estimate"},
+    {"category":"Electronics","item":"microSD card 64GB","description":"OS and application storage","qty":1,"unit":"pcs","material":1200,"labor":0,"supplier":"","lead":"","notes":"estimate"},
+    {"category":"Electronics","item":"Power supply 5V / 3A","description":"Scanner power supply","qty":1,"unit":"pcs","material":1800,"labor":0,"supplier":"","lead":"","notes":"estimate"},
+    {"category":"Electronics","item":"Powered USB hub, 4 ports","description":"Stable power for four cameras","qty":1,"unit":"pcs","material":3500,"labor":0,"supplier":"","lead":"","notes":"estimate; powered hub required"},
+    {"category":"Electronics","item":"USB camera 13MP","description":"Capture camera, model TBD","qty":4,"unit":"pcs","material":4500,"labor":0,"supplier":"","lead":"","notes":"estimate; model blank"},
+    {"category":"Electronics","item":"Touch display 10.1 in","description":"Operator and customer display","qty":1,"unit":"pcs","material":12000,"labor":0,"supplier":"","lead":"","notes":"estimate"},
+    {"category":"Metal work","item":"Aluminium profile frame 2020","description":"Main frame material","qty":1,"unit":"set","material":12000,"labor":6000,"supplier":"","lead":"","notes":"estimate; cutting and drilling included in labour"},
+    {"category":"Metal work","item":"Steel brackets and fasteners","description":"Frame connections","qty":1,"unit":"set","material":2500,"labor":0,"supplier":"","lead":"","notes":"estimate"},
+    {"category":"Wood work","item":"Plywood base and panels","description":"Base, side panels, internal supports","qty":1,"unit":"set","material":4500,"labor":4500,"supplier":"","lead":"","notes":"estimate; cutting and finishing in labour"},
+    {"category":"Glass work","item":"Tempered glass scan surface","description":"Top scanning surface; edge polished","qty":1,"unit":"pcs","material":8000,"labor":3500,"supplier":"","lead":"","notes":"estimate; dimensions blank"},
+    {"category":"Lighting","item":"LED strip and diffuser","description":"Scan illumination","qty":1,"unit":"set","material":1800,"labor":2500,"supplier":"","lead":"","notes":"estimate; electrical work in labour"},
+    {"category":"Wiring","item":"Wiring, connectors and terminals","description":"Internal electrical harness","qty":1,"unit":"set","material":2500,"labor":0,"supplier":"","lead":"","notes":"estimate"},
+    {"category":"Cooling","item":"Fan and ventilation grille","description":"Thermal management","qty":1,"unit":"set","material":1500,"labor":0,"supplier":"","lead":"","notes":"estimate"},
+    {"category":"Finish","item":"Paint and surface consumables","description":"Frame and panel finishing","qty":1,"unit":"set","material":2500,"labor":2500,"supplier":"","lead":"","notes":"estimate"},
+    {"category":"Assembly","item":"Mechanical and electrical assembly","description":"Integration of frame, glass, electronics and wiring","qty":1,"unit":"lot","material":0,"labor":8000,"supplier":"","lead":"","notes":"estimate"},
+    {"category":"Calibration","item":"Testing and calibration","description":"Camera alignment, focus and test scan","qty":1,"unit":"lot","material":0,"labor":6000,"supplier":"","lead":"","notes":"estimate"},
+    {"category":"Packaging","item":"Packaging","description":"Protective packaging for transport","qty":1,"unit":"set","material":1500,"labor":0,"supplier":"","lead":"","notes":"estimate"}
+  ]
+}

@@ -1,0 +1,29 @@
+﻿#,Category,Item,Description,Qty,Unit,Material/unit,Labour/unit,Line total,Supplier,Lead time,Notes
+1,Electronics,Raspberry Pi 4 Model B 4GB,Controller board,1,pcs,"7,500",0,"7,500",,,estimate
+2,Electronics,microSD card 64GB,OS and application storage,1,pcs,"1,200",0,"1,200",,,estimate
+3,Electronics,Power supply 5V / 3A,Scanner power supply,1,pcs,"1,800",0,"1,800",,,estimate
+4,Electronics,"Powered USB hub, 4 ports",Stable power for four cameras,1,pcs,"3,500",0,"3,500",,,estimate; powered hub required
+5,Electronics,USB camera 13MP,"Capture camera, model TBD",4,pcs,"4,500",0,"18,000",,,estimate; model blank
+6,Electronics,Touch display 10.1 in,Operator and customer display,1,pcs,"12,000",0,"12,000",,,estimate
+7,Metal work,Aluminium profile frame 2020,Main frame material,1,set,"12,000","6,000","18,000",,,estimate; cutting and drilling included in labour
+8,Metal work,Steel brackets and fasteners,Frame connections,1,set,"2,500",0,"2,500",,,estimate
+9,Wood work,Plywood base and panels,"Base, side panels, internal supports",1,set,"4,500","4,500","9,000",,,estimate; cutting and finishing in labour
+10,Glass work,Tempered glass scan surface,Top scanning surface; edge polished,1,pcs,"8,000","3,500","11,500",,,estimate; dimensions blank
+11,Lighting,LED strip and diffuser,Scan illumination,1,set,"1,800","2,500","4,300",,,estimate; electrical work in labour
+12,Wiring,"Wiring, connectors and terminals",Internal electrical harness,1,set,"2,500",0,"2,500",,,estimate
+13,Cooling,Fan and ventilation grille,Thermal management,1,set,"1,500",0,"1,500",,,estimate
+14,Finish,Paint and surface consumables,Frame and panel finishing,1,set,"2,500","2,500","5,000",,,estimate
+15,Assembly,Mechanical and electrical assembly,"Integration of frame, glass, electronics and wiring",1,lot,0,"8,000","8,000",,,estimate
+16,Calibration,Testing and calibration,"Camera alignment, focus and test scan",1,lot,0,"6,000","6,000",,,estimate
+17,Packaging,Packaging,Protective packaging for transport,1,set,"1,500",0,"1,500",,,estimate
+
+Material subtotal,80800.00
+Labour subtotal,33000.00
+Subtotal,113800.00
+Overhead (10%),11380.00
+Contingency (5%),5690.00
+Total cost,130870.00
+Margin (25%),32717.50
+Price before VAT,163587.50
+VAT (20%),32717.50
+Grand total,196305.00
